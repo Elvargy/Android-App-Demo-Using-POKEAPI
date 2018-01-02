@@ -14,6 +14,6 @@ public interface Pokeapi {
     String URL = "https://pokeapi.co/api/v2/";
 
     @GET("pokemon")
-    Call<List<Pokemon>> getPokemonNameAndPic();
+    Call<Data> getPokemonNameAndPic();
 
 }

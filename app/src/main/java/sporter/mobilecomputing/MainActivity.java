@@ -2,6 +2,7 @@ package sporter.mobilecomputing;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,37 +34,39 @@ public class MainActivity extends AppCompatActivity {
         Pokeapi pokeapi = retrofit.create(Pokeapi.class);
 
 
-        Call<List<Pokemon>> call = pokeapi.getPokemonNameAndPic();
+        Call<Data> call = pokeapi.getPokemonNameAndPic();
 
-        call.enqueue(new Callback<List<Pokemon>>() {
+        call.enqueue(new Callback<Data>() {
             @Override
-            public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
-                List<Pokemon> pokemon = response.body();
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Log.d("response", response.body().toString());
+                Data data = response.body();
 
-                    String[] pokemonNames = new String[pokemon.size()];
+                String[] pokemonNames = new String[data.getResults().size()];
 
-                    for (int i = 0; i < pokemon.size(); i++) {
+                for (int i = 0; i < data.getResults().size(); i++) {
 
-                        pokemonNames[i] = pokemon.get(i).getName();
-                    }
-                    listView.setAdapter(
-                            new ArrayAdapter<String>(
-                                    getApplicationContext(),
-                                    android.R.layout.simple_list_item_1,
-                                    pokemonNames
-                            )
-                    );
-
+                    pokemonNames[i] = data.getResults().get(i).getName();
                 }
+                for (String item : pokemonNames) {
+                    Log.d("item", item);
+                }
+                listView.setAdapter(
+                        new ArrayAdapter<String>(
+                                getApplicationContext(),
+                                android.R.layout.simple_list_item_1,
+                                pokemonNames
+                        )
+                );
+
+            }
 
 
             @Override
-            public void onFailure(Call<List<Pokemon>> call, Throwable t) {
+            public void onFailure(Call<Data> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 }
-
-
