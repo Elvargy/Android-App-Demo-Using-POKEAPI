@@ -1,7 +1,7 @@
 package sporter.pokeapi;
 
 /**
- * Created by Shane on 04/01/2018.
+ * Created by Shane on 31/12/17.
  */
 
 import android.graphics.Color;
@@ -12,8 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
 
     @Override
@@ -63,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                                 pokemonNames
 
                         )
+
+
                 );
 
             }
