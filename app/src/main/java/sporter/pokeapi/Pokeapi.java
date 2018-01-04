@@ -13,7 +13,7 @@ public interface Pokeapi {
 
     String URL = "https://pokeapi.co/api/v2/";
 
-    @GET("pokemon")
+    @GET("pokemon/?limit=949&offset=1")
     Call<Data> getPokemonNameAndPic();
 
 }
