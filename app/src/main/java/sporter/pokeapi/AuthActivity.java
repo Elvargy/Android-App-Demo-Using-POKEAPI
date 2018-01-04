@@ -15,9 +15,11 @@ public class AuthActivity extends AppCompatActivity implements FingerPrintAuthCa
 
     FingerPrintAuthHelper mFingerPrintAuthHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_auth);
         mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(this, this);
 
     }
