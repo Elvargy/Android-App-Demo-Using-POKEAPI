@@ -1,9 +1,15 @@
 package sporter.pokeapi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.multidots.fingerprintauth.AuthErrorCodes;
@@ -14,6 +20,11 @@ import com.multidots.fingerprintauth.FingerPrintAuthHelper;
 public class AuthActivity extends AppCompatActivity implements FingerPrintAuthCallback {
 
     FingerPrintAuthHelper mFingerPrintAuthHelper;
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+    private EditText mName;
+    private ImageButton btnSubmit;
+    private CheckBox mCheckBox;
 
 
     @Override
@@ -22,7 +33,61 @@ public class AuthActivity extends AppCompatActivity implements FingerPrintAuthCa
         setContentView(R.layout.activity_auth);
         mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(this, this);
 
+        mName = (EditText) findViewById(R.id.favPokemon);
+        btnSubmit = (ImageButton) findViewById(R.id.submitButton);
+        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
+
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        checkSharedPreferences();
+
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCheckBox.isChecked()) {
+                    mEditor.putString(getString(R.string.checkbox), "True");
+                    mEditor.commit();
+
+                    String name = mName.getText().toString();
+                    mEditor.putString(getString(R.string.name), name);
+                    mEditor.commit();
+
+
+                }else{
+
+                    mEditor.putString(getString(R.string.checkbox), "False");
+                    mEditor.commit();
+
+                    mEditor.putString(getString(R.string.name), "");
+                    mEditor.commit();
+
+                }
+            }
+        });
+
+
     }
+
+
+
+    private void checkSharedPreferences(){
+        String checkbox = mPreferences.getString(getString(R.string.checkbox), "False");
+        String name = mPreferences.getString(getString(R.string.name), "Favourite Pokémon?");
+
+        mName.setText(name);
+
+        if(checkbox.equals("True")) {
+            mCheckBox.setChecked(true);
+        }
+        else {
+            mCheckBox.setChecked(false);
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
