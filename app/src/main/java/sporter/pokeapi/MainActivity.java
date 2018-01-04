@@ -1,4 +1,8 @@
-package sporter.mobilecomputing;
+package sporter.pokeapi;
+
+/**
+ * Created by Shane on 04/01/2018.
+ */
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

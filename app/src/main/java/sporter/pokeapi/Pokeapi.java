@@ -1,4 +1,4 @@
-package sporter.mobilecomputing;
+package sporter.pokeapi;
 
 import java.util.List;
 
